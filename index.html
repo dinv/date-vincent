@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vincent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,500;1,9..144,200;1,9..144,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --p1: #a0a0ba;
+    --p2: #dadaf9;
+    --p3: #ededfd;
+    --p4: #9893da;
+    --p5: #7b74c9;
+    --ink: #1C1915;
+    --ink-soft: #4A443C;
+    --ink-muted: #8A8278;
+    --surface: #fefefe;
+    --warm-mid: #e8e4f0;
+    --warm-cream: #f5f3fb;
+    --rose: #c9939b;
+    --rose-soft: #f7f0f1;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Fraunces', Georgia, serif;
+    background: var(--surface);
+    color: var(--ink);
+    min-height: 100vh;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 4rem 2.5rem 3rem;
+    border-bottom: 1px solid var(--warm-mid);
+    position: relative;
+    overflow: hidden;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -100px;
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--p3) 0%, transparent 70%);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--rose-soft) 0%, transparent 70%);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .mode-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 2px;
+    background: var(--p3);
+    color: var(--p1);
+    margin-bottom: 1.6rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    font-weight: 200;
+    line-height: 1.05;
+    letter-spacing: -.03em;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--p4);
+  }
+
+  .hero-tagline {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    max-width: 480px;
+  }
+
+  .hero-tagline em {
+    font-style: normal;
+    color: var(--rose);
+  }
+
+  .guiding-q {
+    font-family: 'DM Mono', monospace;
+    font-size: .8rem;
+    color: var(--ink-muted);
+    letter-spacing: .04em;
+    border-left: 2px solid var(--p4);
+    padding-left: .8rem;
+    margin-bottom: 1.8rem;
+    font-style: italic;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: .8rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--surface);
+    background: var(--p4);
+    border: 1px solid var(--p4);
+    border-radius: 2px;
+    padding: 9px 18px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+  }
+
+  .hero-cta:hover { background: var(--p5); border-color: var(--p5); }
+
+  .hero-cta-ghost {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--p4);
+    background: none;
+    border: 1px solid var(--p2);
+    border-radius: 2px;
+    padding: 9px 18px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+  }
+
+  .hero-cta-ghost:hover { background: var(--p3); border-color: var(--p4); }
+
+  /* ── Photo placeholder ── */
+  .photo-strip {
+    display: flex;
+    gap: .75rem;
+    padding: 1.5rem 2.5rem;
+    border-bottom: 1px solid var(--warm-mid);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .photo-strip::-webkit-scrollbar { display: none; }
+
+  .photo-slot {
+    flex-shrink: 0;
+    width: 160px;
+    height: 220px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--warm-mid);
+  }
+
+  .photo-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  /* ── Nav ── */
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--surface);
+    border-bottom: 1px solid var(--warm-mid);
+  }
+
+  .nav-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 1px;
+    width: 48px;
+    background: linear-gradient(to right, transparent, var(--surface));
+    pointer-events: none;
+  }
+
+  .nav {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav button {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: .9rem 1.2rem;
+    color: var(--ink-muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color .2s, border-color .2s;
+  }
+
+  .nav button:hover { color: var(--ink); }
+
+  .nav button.active {
+    color: var(--p4);
+    border-bottom-color: var(--p4);
+  }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 2.5rem; animation: fadeIn .3s ease; }
+  .panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(7px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Typography helpers ── */
+  .sec-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--p1);
+    margin-bottom: .7rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+
+  .sec-label::after {
+    content: '';
+    display: block;
+    height: 1px;
+    flex: 1;
+    background: var(--warm-mid);
+  }
+
+  .statement {
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 1.75rem;
+    max-width: 580px;
+  }
+
+  .statement em { font-style: italic; color: var(--p4); }
+  .statement .rose { color: var(--rose); font-style: italic; }
+
+  .big-q {
+    font-size: 1.5rem;
+    font-weight: 200;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--p4);
+    margin: 1.5rem 0;
+    max-width: 540px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--warm-mid);
+    margin: 1.75rem 0;
+  }
+
+  /* ── Pills ── */
+  .pill-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; margin-bottom: 1.5rem; }
+
+  .pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .06em;
+    border: 1px solid var(--p2);
+    border-radius: 100px;
+    padding: 4px 13px;
+    color: var(--p1);
+    background: var(--p3);
+  }
+
+  .pill.rose {
+    border-color: #e8c4c8;
+    background: var(--rose-soft);
+    color: var(--rose);
+  }
+
+  /* ── Pull quote ── */
+  .pull-quote {
+    border-left: 2px solid var(--rose);
+    padding-left: 1.1rem;
+    margin: 1.5rem 0;
+    font-size: 1.05rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 520px;
+  }
+
+  /* ── Note block ── */
+  .note-block {
+    border-left: 2px solid var(--p4);
+    padding-left: 1rem;
+    font-size: .93rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 1.5rem 0;
+  }
+
+  .note-block strong { font-weight: 500; font-style: normal; color: var(--ink); }
+
+  /* ── Accordions ── */
+  .chapter-list { list-style: none; }
+
+  .chapter-item {
+    border-bottom: 1px solid var(--warm-mid);
+    padding: 1.25rem 0;
+    cursor: pointer;
+  }
+
+  .chapter-item:first-child { border-top: 1px solid var(--warm-mid); }
+
+  .chapter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .chapter-title {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .chapter-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--p1);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .chapter-chevron {
+    font-size: 14px;
+    color: var(--p1);
+    transition: transform .2s;
+    display: inline-block;
+    margin-left: .3rem;
+  }
+
+  .chapter-item.open .chapter-chevron { transform: rotate(90deg); }
+
+  .chapter-body {
+    display: none;
+    margin-top: .8rem;
+    font-size: .93rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 560px;
+    animation: fadeIn .25s ease;
+  }
+
+  .chapter-item.open .chapter-body { display: block; }
+
+  /* ── Intake form ── */
+  .intake-intro {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin-bottom: 2rem;
+  }
+
+  .intake-intro em { font-style: italic; color: var(--p4); }
+
+  .q-block {
+    margin-bottom: 2rem;
+  }
+
+  .q-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--p1);
+    margin-bottom: .5rem;
+  }
+
+  .q-text {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: .7rem;
+    max-width: 520px;
+  }
+
+  .q-text em { font-style: italic; color: var(--rose); }
+
+  textarea, input[type="text"], input[type="email"] {
+    width: 100%;
+    max-width: 520px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: .93rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--warm-cream);
+    border: 1px solid var(--p2);
+    border-radius: 3px;
+    padding: .85rem 1rem;
+    resize: vertical;
+    transition: border-color .2s, background .2s;
+    outline: none;
+  }
+
+  textarea:focus, input[type="text"]:focus, input[type="email"]:focus {
+    border-color: var(--p4);
+    background: var(--surface);
+  }
+
+  textarea { min-height: 90px; }
+
+  .snail-block {
+    background: var(--warm-cream);
+    border: 1px solid var(--p2);
+    border-radius: 4px;
+    padding: 1.3rem 1.4rem;
+    margin-bottom: .7rem;
+    max-width: 520px;
+  }
+
+  .snail-premise {
+    font-size: .93rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: .8rem;
+  }
+
+  .snail-premise strong { font-weight: 500; color: var(--ink); }
+
+  .submit-row {
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .submit-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--surface);
+    background: var(--p4);
+    border: 1px solid var(--p4);
+    border-radius: 2px;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+
+  .submit-btn:hover { background: var(--p5); border-color: var(--p5); }
+
+  .submit-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .06em;
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+
+  .success-msg {
+    display: none;
+    border-left: 2px solid var(--rose);
+    padding-left: 1rem;
+    font-size: .97rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-top: 1.5rem;
+    max-width: 480px;
+    animation: fadeIn .4s ease;
+  }
+
+  /* ── Stamp ── */
+  .stamp {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .1em;
+    border: 1px solid var(--p2);
+    padding: 5px 14px;
+    border-radius: 100px;
+    color: var(--p1);
+    margin-bottom: 1.4rem;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 600px) {
+    .hero { padding: 2.5rem 1.4rem 2.2rem; min-height: 300px; }
+    .panel { padding: 1.8rem 1.4rem; }
+    .photo-strip { padding: 1.2rem 1.4rem; }
+    .nav button { padding: .85rem .9rem; font-size: 10px; }
+    .hero h1 { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Hero ── -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="mode-badge">Vincent · Denver</div>
+    <h1>Unhurried.<br><em>Intentional.</em><br>Occasionally<br>devastating.</h1>
+    <p class="hero-tagline">Not here to perform. <em>Here to connect.</em></p>
+    <div class="hero-actions">
+      <button class="hero-cta" onclick="switchPanel('find')">Find out →</button>
+      <button class="hero-cta-ghost" onclick="switchPanel('who')">Who I am →</button>
+    </div>
+  </div>
+</header>
+
+<!-- ── Photo strip ── -->
+<div class="photo-strip">
+  <div class="photo-slot">
+    <img src="IMG_2988.PNG" alt="Vincent with wolves in Colorado mountains">
+  </div>
+  <div class="photo-slot">
+    <img src="IMG_7637.JPG" alt="Vincent at airfield with a Cessna">
+  </div>
+  <div class="photo-slot">
+    <img src="IMG_3757.JPG" alt="Vincent smiling in car">
+  </div>
+</div>
+
+<!-- ── Nav ── -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <button class="active" data-panel="who">Who I am</button>
+    <button data-panel="building">What I'm building</button>
+    <button data-panel="looking">What I'm looking for</button>
+    <button data-panel="find">Find out</button>
+  </nav>
+</div>
+
+<!-- ── Panel: Who I am ── -->
+<section id="who" class="panel active">
+  <p class="sec-label">The short version</p>
+  <p class="statement">I think before I speak. What I say, I mean. I live deliberately — not because I have it all figured out, but because <em>simplicity is how I cut through the noise.</em></p>
+  <p class="statement" style="font-size:1rem;">I'm a former tech worker and school bus driver working toward math teacher certification, building a trauma-aware financial coaching practice along the way. The through-line in all of it: meet people where they actually are. Not where you wish they were.</p>
+
+  <hr class="divider">
+
+  <p class="sec-label">On simplicity</p>
+  <p class="statement" style="font-size:1rem;">Not as aesthetic. As a way of living. It's practical, yes — but it also cuts through the anxiety of modern life in a way that I haven't found anywhere else. I don't own much. I don't say much. What I have and what I say tend to matter.</p>
+
+  <hr class="divider">
+
+  <p class="sec-label">The honest arc</p>
+  <ul class="chapter-list" id="arc-list"></ul>
+
+  <hr class="divider">
+
+  <p class="sec-label">The frame I keep returning to</p>
+  <div class="big-q">"Am I using my life, or is my life using me?"</div>
+  <p class="statement" style="font-size:.95rem;color:var(--ink-soft);">This question lives in my coaching, my content, my calendar. If I can't answer yes to the first half, I change something. It's not a mantra. It's a practice.</p>
+
+  <hr class="divider">
+
+  <p class="sec-label">What I'm not</p>
+  <div class="pill-row">
+    <span class="pill">not performative</span>
+    <span class="pill">not hustle-culture</span>
+    <span class="pill">not waiting to be ready</span>
+    <span class="pill">not interested in fluff</span>
+    <span class="pill">not a lot of words</span>
+    <span class="pill">not nothing, either</span>
+  </div>
+</section>
+
+<!-- ── Panel: What I'm building ── -->
+<section id="building" class="panel">
+  <p class="sec-label">Why this matters for dating</p>
+  <p class="statement" style="font-size:1rem;">This is what my life actually looks like right now. I'm not between things. I'm in the middle of things — intentionally. If that's compelling to you, keep reading. If it sounds like chaos, that's useful information too.</p>
+
+  <ul class="chapter-list" id="build-list"></ul>
+
+  <div class="note-block" style="margin-top:1.75rem;">
+    <strong>The through-line:</strong> Every one of these started because the problem was interesting, not because I had a plan. The plan came from building. That's how I operate. Build, observe, let the next thing emerge.
+  </div>
+</section>
+
+<!-- ── Panel: What I'm looking for ── -->
+<section id="looking" class="panel">
+  <p class="sec-label">The honest version</p>
+  <p class="statement">I'm not looking for a project. I'm looking for a <em>teammate.</em> Someone who shows up with their own infrastructure — emotionally, directionally, practically.</p>
+
+  <p class="pull-quote">I'm not here to convince you. But I'm happy to be interesting.</p>
+
+  <hr class="divider">
+
+  <p class="sec-label">What I'm actually evaluating</p>
+  <ul class="chapter-list" id="os-list"></ul>
+
+  <hr class="divider">
+
+  <p class="sec-label">What I'm looking for</p>
+  <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--p4);margin-bottom:.4rem;">these things</p>
+  <div class="pill-row" style="margin-bottom:.75rem;">
+    <span class="pill">in motion</span>
+    <span class="pill">self-aware</span>
+    <span class="pill">present</span>
+    <span class="pill">collaborative</span>
+    <span class="pill">able to disappoint me</span>
+    <span class="pill">willing to be disappointed</span>
+  </div>
+
+  <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:.4rem;">not these things</p>
+  <div class="pill-row" style="margin-top:0;">
+    <span class="pill rose">someone to save</span>
+    <span class="pill rose">someone to save me</span>
+    <span class="pill rose">agreeableness without self</span>
+    <span class="pill rose">a wound that only I can fix</span>
+    <span class="pill rose">performed compatibility</span>
+  </div>
+
+  <hr class="divider">
+
+  <p class="sec-label">The misunderstood green flag</p>
+  <p class="statement" style="font-size:.97rem;">Most people treat early disagreement as a warning sign. I read it differently. If someone pushes back, holds a preference, or doesn't immediately mold to the shape of what I want — that's signal. It means someone's actually there. I don't just want easy. I want <em>present.</em></p>
+</section>
+
+<!-- ── Panel: Find out ── -->
+<section id="find" class="panel">
+  <p class="sec-label">The intake</p>
+  <p class="intake-intro">If you've read this far, you're either the right person or admirably thorough. Either way — <em>these are the questions I actually want answered.</em> No wrong answers. Some answers are more interesting than others.</p>
+
+  <div id="intake-form">
+
+    <div class="q-block">
+      <div class="q-label">01 — Start here</div>
+      <p class="q-text">What's your name, and how did you find this page?</p>
+      <input type="text" placeholder="Name · where you came from" id="q-name">
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">02 — Recently</div>
+      <p class="q-text">When did you last cry? When did you last laugh <em>hard?</em></p>
+      <textarea placeholder="Both. Take your time." id="q-cry-laugh"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">03 — Self-knowledge</div>
+      <p class="q-text">What did you learn from your last relationship — and what would you do differently?</p>
+      <textarea placeholder="Not looking for a villain origin story. Just self-examination." id="q-last-rel"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">04 — The snail question</div>
+      <div class="snail-block">
+        <p class="snail-premise"><strong>The premise:</strong> You and a superintelligent snail both receive $1 million dollars, and you both become immortal. There's one condition: if the snail touches you, you die. It always knows exactly where you are. It moves slowly — but it never stops, never sleeps, and it's coming for you. Forever.</p>
+      </div>
+      <p class="q-text" style="margin-top:.5rem;">What's your plan? And — what does your answer say about you?</p>
+      <textarea placeholder="There is no correct answer. There are revealing ones." id="q-snail"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">05 — The real one</div>
+      <p class="q-text">What are you building — in your life, your work, yourself? What's the thing you're in the middle of?</p>
+      <textarea placeholder="Not your job title. The actual thing." id="q-building"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">06 — Optional but good</div>
+      <p class="q-text">Anything you want me to know that these questions didn't surface?</p>
+      <textarea placeholder="Open field. Use it or don't." id="q-other"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">07 — So I can respond</div>
+      <p class="q-text">Email or phone — whichever you'd prefer a reply to.</p>
+      <input type="text" placeholder="however you want to hear back" id="q-contact">
+    </div>
+
+    <div class="submit-row">
+      <button class="submit-btn" onclick="handleSubmit()">Send it →</button>
+      <span class="submit-note">Goes directly to me. No algorithm in the middle.</span>
+    </div>
+
+    <div class="success-msg" id="success-msg">
+      Got it. I read everything that comes through here. I'll be in touch — unhurriedly, intentionally, and with full sentences.
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const arcItems = [
+    {
+      title: "Tech worker",
+      tag: "The foundation",
+      body: "Worked in tech long enough to understand systems, tooling, and how things actually get built. Left when the fit stopped making sense. Kept the skills, shed the identity."
+    },
+    {
+      title: "School bus driver — special needs",
+      tag: "The unexpected teacher",
+      body: "Drove a bus for kids with special needs for several years. This job taught presence. Patience. Regulation — your own, first, so you can hold space for someone else's. The kids who need the most give the clearest feedback. That's the best training there is."
+    },
+    {
+      title: "Aspiring math teacher",
+      tag: "In progress",
+      body: "Working toward certification. Not away from everything else — alongside it. The classroom is where I first understood that most people aren't stuck because they're not smart. They're stuck because no one made it safe to not know yet."
+    },
+    {
+      title: "Present Tense Finance",
+      tag: "The synthesis",
+      body: "Trauma-aware financial coaching for single moms and anyone mid-figuring-it-out. The core insight: money shame is the actual barrier. The numbers are just the symptom. Feelings first — every session, every time — and let the math follow."
+    }
+  ];
+
+  const buildItems = [
+    {
+      title: "Present Tense Finance",
+      tag: "Coaching · Active",
+      body: "Building a coaching practice from scratch. Weekly YouTube content. A methodology I believe in. Learning to sell something I made. This is the main project — everything else orbits it."
+    },
+    {
+      title: "AI automation systems",
+      tag: "Side hustle · Live",
+      body: "Building deployable AI lead capture systems for small businesses. Python, Flask, Anthropic API. This is also my sales practice — I'm learning to close by building something worth closing. Two things at once, on purpose."
+    },
+    {
+      title: "Math teacher certification",
+      tag: "Long game · In progress",
+      body: "Working toward certification in parallel with everything else. Not a pivot. An addition. The classroom and the coaching room are the same room, philosophically."
+    },
+    {
+      title: "Savings goal: $7k by August",
+      tag: "Logistics · Honest",
+      body: "I put this here because transparency about where I actually am matters more than a curated version. I'm building toward stability, not performing it. The number has a deadline because accountability is real."
+    }
+  ];
+
+  const osItems = [
+    {
+      title: "Infrastructure, not just feelings",
+      tag: "The lens",
+      body: "I'm evaluating capacity — family dynamics, attachment style, ability to sit with emotion, sense of self and purpose. Not whether someone has had hard things, but what they've done with them. Whether they're in motion."
+    },
+    {
+      title: "The wound question",
+      tag: "Honest",
+      body: "Everyone carries something. The question is whether they own it, worked on it, and are asking anything of themselves around it — or only of you. A recurring unresolved wound that gets activated by your normal life is a glacier, not an ice cube. Size it accurately."
+    },
+    {
+      title: "Collaboration style",
+      tag: "Non-negotiable",
+      body: "I work with co-leaders. I don't work well with non-collaborators. The harder screen isn't the obvious non-collaborator — it's the people-pleaser who looks like collaboration but is actually agreeableness without self. The tell: do they ever disagree? Hold a preference that inconveniences you? Tolerate your disappointment without rushing to fix it?"
+    },
+    {
+      title: "The screening question",
+      tag: "First conversation",
+      body: "What did you learn from your previous relationships and what would you do differently? I'm listening for self-examination, not survival narrative. Both can sound similar from the outside."
+    },
+    {
+      title: "Team framing",
+      tag: "How I show up",
+      body: "I extend team orientation early and generously. That's a strength. The gap I'm watching for: whether the other person has the same definition of team and the capacity to hold it under pressure."
+    }
+  ];
+
+  function buildAccordion(listId, items) {
+    const ul = document.getElementById(listId);
+    items.forEach(function(item) {
+      const li = document.createElement('li');
+      li.className = 'chapter-item';
+      li.innerHTML =
+        '<div class="chapter-header">' +
+          '<span class="chapter-title">' + item.title + ' <span class="chapter-chevron">›</span></span>' +
+          '<span class="chapter-tag">' + item.tag + '</span>' +
+        '</div>' +
+        '<div class="chapter-body">' + item.body + '</div>';
+      li.addEventListener('click', function() {
+        var isOpen = li.classList.contains('open');
+        ul.querySelectorAll('.chapter-item').forEach(function(c) { c.classList.remove('open'); });
+        if (!isOpen) li.classList.add('open');
+      });
+      ul.appendChild(li);
+    });
+  }
+
+  function switchPanel(id) {
+    document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.nav button').forEach(function(b) { b.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    document.querySelector('[data-panel="' + id + '"]').classList.add('active');
+    document.querySelector('.nav-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.querySelectorAll('.nav button').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      switchPanel(btn.dataset.panel);
+    });
+  });
+
+  function handleSubmit() {
+    const name = document.getElementById('q-name').value.trim();
+    const contact = document.getElementById('q-contact').value.trim();
+    if (!name || !contact) {
+      alert('Name and contact info are the two I actually need.');
+      return;
+    }
+    // In production: wire to a form backend (Formspree, Netlify Forms, etc.)
+    // For now: show success state
+    document.getElementById('success-msg').style.display = 'block';
+    document.querySelector('.submit-row').style.opacity = '0.4';
+    document.querySelector('.submit-row').style.pointerEvents = 'none';
+  }
+
+  buildAccordion('arc-list', arcItems);
+  buildAccordion('build-list', buildItems);
+  buildAccordion('os-list', osItems);
+</script>
+</body>
+</html>
